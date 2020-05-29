@@ -38,6 +38,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 /**
  * Implementation of {@link ObjectStoreClient} that encapsulates a {@link MinioClient}.
@@ -67,10 +69,14 @@ public class MinioClientWrapper implements ObjectStoreClient {
   }
 
   @Override
-  public void putObject(String bucket, String objectName, Path filePath, Map<String, String> headers) {
+  public void putObject(String bucket, String objectName, Path filePath, Map<HeaderKey, String> headers) {
     try {
       var options = new PutObjectOptions(Files.size(filePath), -1);
-      options.setHeaders(headers);
+      Map<String, String> minioHeaders = headers.entrySet().stream()
+          .map(entry -> Map.entry(entry.getKey().keyValue, entry.getValue()))
+          .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+
+      options.setHeaders(minioHeaders);
       minioClient.putObject(bucket, objectName, filePath.toString(), options);
     } catch (ErrorResponseException | NoSuchAlgorithmException | InternalException | IOException | InvalidKeyException
         | InvalidResponseException | InvalidBucketNameException | InsufficientDataException | XmlParserException e) {
