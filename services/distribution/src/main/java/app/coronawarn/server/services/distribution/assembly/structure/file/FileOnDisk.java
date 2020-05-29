@@ -27,7 +27,7 @@ import app.coronawarn.server.services.distribution.assembly.structure.util.Immut
 /**
  * A {@link File} that can be written to disk.
  */
-public class FileOnDisk extends WritableOnDisk implements File<WritableOnDisk> {
+public class FileOnDisk extends WritableOnDisk implements File<WritableOnDisk>, Comparable<FileOnDisk> {
 
   private byte[] bytes;
 
@@ -62,5 +62,10 @@ public class FileOnDisk extends WritableOnDisk implements File<WritableOnDisk> {
   @Override
   public void prepare(ImmutableStack<Object> indices) {
     // Method override exists here to comply with the implementation rules for the Writable interface.
+  }
+
+  @Override
+  public int compareTo(FileOnDisk file) {
+    return this.getName().compareTo(file.getName());
   }
 }
