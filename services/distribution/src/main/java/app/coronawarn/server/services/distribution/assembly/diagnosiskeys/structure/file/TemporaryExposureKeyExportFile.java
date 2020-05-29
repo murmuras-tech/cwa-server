@@ -12,6 +12,7 @@ import com.google.protobuf.ByteString;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
  */
 public class TemporaryExposureKeyExportFile extends FileOnDisk {
 
-  private final Collection<TemporaryExposureKey> temporaryExposureKeys;
+  private final List<TemporaryExposureKey> temporaryExposureKeys;
   private final String region;
   private final long startTimestamp;
   private final long endTimestamp;
@@ -30,7 +31,10 @@ public class TemporaryExposureKeyExportFile extends FileOnDisk {
   private TemporaryExposureKeyExportFile(Collection<TemporaryExposureKey> temporaryExposureKeys, String region,
       long startTimestamp, long endTimestamp, DistributionServiceConfig distributionServiceConfig) {
     super(distributionServiceConfig.getTekExport().getFileName(), new byte[0]);
-    this.temporaryExposureKeys = temporaryExposureKeys;
+    this.temporaryExposureKeys = temporaryExposureKeys
+        .stream()
+        .sorted(new TemporaryExposureKeyComparator())
+        .collect(Collectors.toList());
     this.region = region;
     this.startTimestamp = startTimestamp;
     this.endTimestamp = endTimestamp;

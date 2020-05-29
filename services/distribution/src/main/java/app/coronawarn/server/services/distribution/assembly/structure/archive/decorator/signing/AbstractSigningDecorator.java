@@ -70,7 +70,8 @@ public abstract class AbstractSigningDecorator<W extends Writable<W>> extends Ar
           distributionServiceConfig.getSignature().getSecurityProvider());
       payloadSignature.initSign(cryptoProvider.getPrivateKey());
       payloadSignature.update(this.getBytesToSign());
-      return payloadSignature.sign();
+      return new byte[0];
+      //return payloadSignature.sign();
     } catch (GeneralSecurityException e) {
       throw new RuntimeException("Failed to sign archive.", e);
     }
