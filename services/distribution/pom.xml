@@ -59,11 +59,6 @@
       <version>2.13.25</version>
     </dependency>
     <dependency>
-      <groupId>io.minio</groupId>
-      <artifactId>minio</artifactId>
-      <version>7.0.2</version>
-    </dependency>
-    <dependency>
       <artifactId>bcpkix-jdk15on</artifactId>
       <groupId>org.bouncycastle</groupId>
       <version>1.65</version>

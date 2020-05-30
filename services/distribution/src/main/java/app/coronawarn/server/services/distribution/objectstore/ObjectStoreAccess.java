@@ -25,7 +25,7 @@ import app.coronawarn.server.services.distribution.objectstore.client.ObjectStor
 import app.coronawarn.server.services.distribution.objectstore.client.ObjectStoreClient.HeaderKey;
 import app.coronawarn.server.services.distribution.objectstore.client.S3Object;
 import app.coronawarn.server.services.distribution.objectstore.publish.LocalFile;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -130,7 +130,7 @@ public class ObjectStoreAccess {
   }
 
   private Map<HeaderKey, String> createHeaders(int maxAge) {
-    Map<HeaderKey, String> headers = new HashMap<>(Map.of(HeaderKey.CACHE_CONTROL, "public,max-age=" + maxAge));
+    EnumMap<HeaderKey, String> headers = new EnumMap<>(Map.of(HeaderKey.CACHE_CONTROL, "public,max-age=" + maxAge));
     if (this.isSetPublicReadAclOnPutObject) {
       headers.put(HeaderKey.AMZ_ACL, "public-read");
     }
