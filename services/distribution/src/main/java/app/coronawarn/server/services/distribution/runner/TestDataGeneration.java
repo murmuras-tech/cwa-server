@@ -25,7 +25,6 @@ import app.coronawarn.server.common.persistence.service.DiagnosisKeyService;
 import app.coronawarn.server.common.protocols.internal.RiskLevel;
 import app.coronawarn.server.services.distribution.config.DistributionServiceConfig;
 import app.coronawarn.server.services.distribution.config.DistributionServiceConfig.TestData;
-import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -125,6 +124,7 @@ public class TestDataGeneration implements ApplicationRunner {
 
     logger.debug("Writing {} new diagnosis keys to the database...", newDiagnosisKeys.size());
     diagnosisKeyService.saveDiagnosisKeys(newDiagnosisKeys);
+
     logger.debug("Test data generation finished successfully.");
   }
 
